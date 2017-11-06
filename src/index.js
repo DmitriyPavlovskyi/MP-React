@@ -1,16 +1,5 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {render} from 'react-dom';
-import PropTypes from 'prop-types';
+import Core from './core/App';
 
-class App extends Component {
-    static propTypes = {
-    };
-
-    render() {
-      return (
-        <h2>Hello World!</h2>
-      );
-    }
-}
-
-render(<App />, document.getElementById('container'));
+render(<Core />, document.getElementById('container'));
