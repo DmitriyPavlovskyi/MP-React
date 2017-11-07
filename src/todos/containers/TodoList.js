@@ -1,18 +1,29 @@
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Todo from '../components/Todo';
+import {deleteTodo} from '../actions';
 
-function TodoList(props) {
-  const todos = props.todos;
-  // Правильно ли так передавать item?
-  let todoList = todos.map(item => <Todo key = {item.id} item = {item} />);
-  return (
-    <ul>
-      <h2>ToDo List:</h2>
-      {todoList}
-    </ul>
-  );
+class TodoList extends Component {
+  // handleDeletion = (id) => {
+  //   console.log('Delete item');
+  //   this.props.deleteTodo(id);
+  // }
+
+  render() {
+    const todos = this.props.todos;
+    // Правильно ли так передавать item?
+    // Как лучше передавать:
+    // 1- {this.props.deleteTodo.bind(null, item.id)}
+    // 2- закомментированное
+    let todoList = todos.map(item => <Todo key = {item.id} deleteTodo = {this.props.deleteTodo.bind(null, item.id)} item = {item} />);
+    return (
+      <ul>
+        <h2>ToDo List:</h2>
+        {todoList}
+      </ul>
+    );
+  }
 }
 
 TodoList.propTypes = {
@@ -25,4 +36,12 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(TodoList);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    deleteTodo: (data) => {
+      dispatch(deleteTodo(data));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoList);

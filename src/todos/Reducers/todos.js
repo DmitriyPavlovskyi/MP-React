@@ -1,5 +1,5 @@
 import {todoList as defaultState} from '../../fixtures';
-import {ADD_TODO} from '../constants';
+import {ADD_TODO, DELETE_TODO} from '../constants';
 
 const todos = (state = defaultState, action) => {
   switch (action.type) {
@@ -12,6 +12,9 @@ const todos = (state = defaultState, action) => {
         isSubmenuOpened: false
       }
     ];
+
+  case DELETE_TODO:
+    return state.filter(item => item.id !== action.payload);
   default:
     return state;
   }

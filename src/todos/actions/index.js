@@ -1,4 +1,4 @@
-import {ADD_TODO} from '../constants';
+import {ADD_TODO, DELETE_TODO} from '../constants';
 
 // export const fetchDefaultData = () => {
 //   return {
@@ -10,5 +10,12 @@ export const addTodo = (todo) => {
   return {
     type: ADD_TODO,
     payload: todo
+  };
+};
+
+export const deleteTodo = (id) => {
+  return {
+    type: DELETE_TODO,
+    payload: id
   };
 };

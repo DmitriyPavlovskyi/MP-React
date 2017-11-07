@@ -8,13 +8,15 @@ class CreateTodo extends Component {
     createTodo: PropTypes.func.isRequired
   };
 
+  // Почему мы не обьявили input?
   input = null;
 
-  onClickAddToDoButton = () => {
+  handleDispatchAddition = () => {
     this.props.createTodo({
       id: Date.now(),
       todo: this.input.value
     });
+
     this.input.value = '';
   }
 
@@ -22,7 +24,7 @@ class CreateTodo extends Component {
     return (
       <div>
         <input ref={(input) => {this.input = input;}} type="text" placeholder="Add some text"/>
-        <button onClick={this.onClickAddToDoButton}>Add todo</button>
+        <button onClick={this.handleDispatchAddition}>Add todo</button>
       </div>
     );
   }

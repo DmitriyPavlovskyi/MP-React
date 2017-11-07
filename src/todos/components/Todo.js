@@ -1,20 +1,26 @@
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-function Todo(props) {
-  const {item} = props;
+const Todo = ({item, deleteTodo}) => {
+  // sendId = () => {
+  //   this.props.deleteTodo(this.props.item.id);
+  // }
 
   return (
-    <li>{item.todo}</li>
+    <li>
+      {item.todo}
+      <button onClick={deleteTodo}>x</button>
+    </li>
   );
-}
+};
 
 Todo.propTypes = {
   item: PropTypes.shape({
     id: PropTypes.number.isRequired,
     todo: PropTypes.string,
     isCompleted: PropTypes.bool.isRequired
-  })
+  }),
+  deleteTodo: PropTypes.func.isRequired
 };
 
 export default Todo;
