@@ -1,7 +1,14 @@
-import {FETCH_DEFAULT_DATA} from '../constants';
+import {ADD_TODO} from '../constants';
 
-export const fetchDefaultData = () => {
+// export const fetchDefaultData = () => {
+//   return {
+//     type: FETCH_DEFAULT_DATA
+//   };
+// };
+
+export const addTodo = (todo) => {
   return {
-    type: FETCH_DEFAULT_DATA
+    type: ADD_TODO,
+    payload: todo
   };
 };

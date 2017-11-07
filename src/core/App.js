@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import RootReducer from './RootReducer';
-import Test from '../todos/Components/Test';
+import TodoList from '../todos/containers/TodoList';
+import CreateTodo from '../todos/components/CreateTodo';
 
 let store = createStore(RootReducer);
 
@@ -16,7 +17,8 @@ class App extends Component {
     return (
       <Provider store={store}>
         <div>
-          <Test />
+          <CreateTodo />
+          <TodoList />
         </div>
       </Provider>
     );
