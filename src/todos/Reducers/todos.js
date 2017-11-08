@@ -1,5 +1,5 @@
 import {todoList as defaultState} from '../../fixtures';
-import {ADD_TODO, DELETE_TODO, TOGGLE_TODO} from '../constants';
+import {ADD_TODO, DELETE_TODO, TOGGLE_TODO, UPDATE_TODO} from '../constants';
 
 const todos = (state = defaultState, action) => {
   switch (action.type) {
@@ -21,6 +21,13 @@ const todos = (state = defaultState, action) => {
     return state.map(todo =>
       (todo.id === action.payload)
         ? {...todo, isOpened: !todo.isOpened}
+        : todo
+    );
+
+  case UPDATE_TODO:
+    return state.map(todo =>
+      (todo.id === action.payload.id)
+        ? {...todo, todo: action.payload.data, isOpened: false}
         : todo
     );
 

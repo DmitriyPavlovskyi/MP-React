@@ -14,7 +14,8 @@ class CreateTodo extends Component {
   handleDispatchAddition = () => {
     this.props.createTodo({
       id: Date.now(),
-      todo: this.input.value
+      todo: this.input.value,
+      isOpened: false
     });
 
     this.input.value = '';
