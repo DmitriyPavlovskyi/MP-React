@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Todo from '../components/Todo';
-import {deleteTodo} from '../actions';
+import {deleteTodo, toggleTodo} from '../actions';
 
 class TodoList extends Component {
   // handleDeletion = (id) => {
@@ -16,7 +16,13 @@ class TodoList extends Component {
     // Как лучше передавать:
     // 1- {this.props.deleteTodo.bind(null, item.id)}
     // 2- закомментированное
-    let todoList = todos.map(item => <Todo key = {item.id} deleteTodo = {this.props.deleteTodo.bind(null, item.id)} item = {item} />);
+    let todoList = todos.map(item => (<Todo
+      key = {item.id}
+      deleteTodo = {this.props.deleteTodo.bind(null, item.id)}
+      toggleOpen = {this.props.toggleOpen.bind(null, item.id)}
+      isOpened={item.isOpened}
+      item = {item}
+    />));
     return (
       <ul>
         <h2>ToDo List:</h2>
@@ -27,7 +33,9 @@ class TodoList extends Component {
 }
 
 TodoList.propTypes = {
-  todos: PropTypes.array.isRequired
+  todos: PropTypes.array.isRequired,
+  deleteTodo: PropTypes.func.isRequired,
+  toggleOpen: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => {
@@ -38,8 +46,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteTodo: (data) => {
-      dispatch(deleteTodo(data));
+    deleteTodo: (id) => {
+      dispatch(deleteTodo(id));
+    },
+    toggleOpen: (id) => {
+      dispatch(toggleTodo(id));
     }
   };
 };
