@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-
-const Todo = ({item, deleteTodo, toggleOpen, isOpened, updateTodo}) => {
+// Как можно удобнее передать аргументы?
+const Todo = (props) => {
+  const {item, deleteTodo, toggleOpen, isOpened, updateTodo, isCompleted, toggleCompleted} = props;
   // sendId = () => {
   //   this.props.deleteTodo(this.props.item.id);
   // }
@@ -21,7 +22,10 @@ const Todo = ({item, deleteTodo, toggleOpen, isOpened, updateTodo}) => {
           <button onClick={toggleOpen}>Cancel</button>
         </div> :
         <div>
-          <h2>{item.todo}</h2>
+          <h2
+            style={{textDecoration: isCompleted ? 'line-through' : 'none'}}
+            onClick={toggleCompleted}>{item.todo}
+          </h2>
           <button onClick={toggleOpen}>Edit</button>
           <button onClick={deleteTodo}>Delete</button>
         </div>
@@ -39,7 +43,9 @@ Todo.propTypes = {
   deleteTodo: PropTypes.func.isRequired,
   toggleOpen: PropTypes.func.isRequired,
   updateTodo: PropTypes.func.isRequired,
-  isOpened: PropTypes.bool.isRequired
+  isOpened: PropTypes.bool.isRequired,
+  isCompleted: PropTypes.bool.isRequired,
+  toggleCompleted: PropTypes.func.isRequired
 };
 
 export default Todo;

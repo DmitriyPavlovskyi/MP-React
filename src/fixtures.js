@@ -2,7 +2,7 @@ export const todoList = [
   {
     id: 1,
     todo: 'Learn React',
-    isCompleted: false,
+    isCompleted: true,
     isOpened: false
   },
   {
@@ -14,7 +14,7 @@ export const todoList = [
   {
     id: 3,
     todo: 'Create todo App',
-    isCompleted: false,
+    isCompleted: true,
     isOpened: false
   },
   {

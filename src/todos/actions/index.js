@@ -1,4 +1,4 @@
-import {ADD_TODO, DELETE_TODO, TOGGLE_TODO, UPDATE_TODO} from '../constants';
+import {ADD_TODO, DELETE_TODO, TOGGLE_TODO, UPDATE_TODO, TOGGLE_COMPLETED} from '../constants';
 
 // export const fetchDefaultData = () => {
 //   return {
@@ -33,5 +33,12 @@ export const updateTodo = (id, data) => {
     payload: {
       id, data
     }
+  };
+};
+
+export const toggleCompleted = (id) => {
+  return {
+    type: TOGGLE_COMPLETED,
+    payload: id
   };
 };

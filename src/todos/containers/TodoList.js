@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Todo from '../components/Todo';
-import {deleteTodo, toggleTodo, updateTodo} from '../actions';
+import {deleteTodo, toggleTodo, updateTodo, toggleCompleted} from '../actions';
 
 class TodoList extends Component {
   // handleDeletion = (id) => {
@@ -20,8 +20,10 @@ class TodoList extends Component {
       key = {item.id}
       deleteTodo = {this.props.deleteTodo.bind(null, item.id)}
       toggleOpen = {this.props.toggleOpen.bind(null, item.id)}
+      toggleCompleted = {this.props.toggleCompleted.bind(null, item.id)}
       updateTodo = {this.props.updateTodo.bind(null, item.id)}
       isOpened={item.isOpened}
+      isCompleted={item.isCompleted}
       item = {item}
     />));
     return (
@@ -37,7 +39,8 @@ TodoList.propTypes = {
   todos: PropTypes.array.isRequired,
   deleteTodo: PropTypes.func.isRequired,
   toggleOpen: PropTypes.func.isRequired,
-  updateTodo: PropTypes.func.isRequired
+  updateTodo: PropTypes.func.isRequired,
+  toggleCompleted: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => {
@@ -56,6 +59,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     updateTodo: (id, data) => {
       dispatch(updateTodo(id, data));
+    },
+    toggleCompleted: (id) => {
+      dispatch(toggleCompleted(id));
     }
   };
 };
