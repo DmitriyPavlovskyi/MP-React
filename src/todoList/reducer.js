@@ -1,19 +1,9 @@
-import {todoList as defaultState} from '../../fixtures';
-import {ADD_TODO, DELETE_TODO, TOGGLE_TODO, UPDATE_TODO, TOGGLE_COMPLETED} from '../constants';
+import {todoList as defaultState} from '../fixtures';
+import {DELETE_TODO, TOGGLE_TODO, UPDATE_TODO, TOGGLE_COMPLETED} from './constants';
 
 const todos = (state = defaultState, action) => {
   switch (action.type) {
-  case ADD_TODO:
-    return [
-      ...state,
-      {
-        ...action.payload,
-        isCompleted: false,
-        isSubmenuOpened: false
-      }
-    ];
-
-  case DELETE_TODO:
+  case DELETE_TODO:debugger
     return state.filter(item => item.id !== action.payload);
 
     // Не понял как работает сортировка тут

@@ -1,17 +1,4 @@
-import {ADD_TODO, DELETE_TODO, TOGGLE_TODO, UPDATE_TODO, TOGGLE_COMPLETED} from '../constants';
-
-// export const fetchDefaultData = () => {
-//   return {
-//     type: FETCH_DEFAULT_DATA
-//   };
-// };
-
-export const addTodo = (todo) => {
-  return {
-    type: ADD_TODO,
-    payload: todo
-  };
-};
+import {DELETE_TODO, TOGGLE_TODO, UPDATE_TODO, TOGGLE_COMPLETED} from './constants';
 
 export const deleteTodo = (id) => {
   return {

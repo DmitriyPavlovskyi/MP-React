@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import RootReducer from './RootReducer';
-import TodoList from '../todos/containers/TodoList';
-import CreateTodo from '../todos/components/CreateTodo';
+import CreateTodo from '../createTodo';
+import TodoList from '../todoList';
+import Filters from '../filters';
 
 let store = createStore(RootReducer);
 
@@ -19,6 +19,7 @@ class App extends Component {
         <div>
           <CreateTodo />
           <TodoList />
+          <Filters />
         </div>
       </Provider>
     );

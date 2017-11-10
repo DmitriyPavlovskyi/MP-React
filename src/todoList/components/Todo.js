@@ -1,12 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-// Как можно удобнее передать аргументы?
+
 const Todo = (props) => {
   const {item, deleteTodo, toggleOpen, isOpened, updateTodo, isCompleted, toggleCompleted} = props;
-  // sendId = () => {
-  //   this.props.deleteTodo(this.props.item.id);
-  // }
-  // let test = isOpened ? <h2>'test'</h2> : <h2>'false'</h2>;
 
   // Как можно stateless компоненту передать ref чтоб не делать такие костыли?
   function updateTodoData(ev) {
@@ -22,10 +18,10 @@ const Todo = (props) => {
           <button onClick={toggleOpen}>Cancel</button>
         </div> :
         <div>
-          <h2
+          <span
             style={{textDecoration: isCompleted ? 'line-through' : 'none'}}
             onClick={toggleCompleted}>{item.todo}
-          </h2>
+          </span>
           <button onClick={toggleOpen}>Edit</button>
           <button onClick={deleteTodo}>Delete</button>
         </div>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {addTodo} from '../actions';
+import {addTodo} from './actions';
 import {connect} from 'react-redux';
 
 class CreateTodo extends Component {
@@ -8,7 +8,18 @@ class CreateTodo extends Component {
     createTodo: PropTypes.func.isRequired
   };
 
-  // Почему мы не обьявили input?
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     ..
+  //   };
+  //   this.input = null;
+  // }
+  //
+  // state = {
+  //
+  // };
+
   input = null;
 
   handleDispatchAddition = () => {
