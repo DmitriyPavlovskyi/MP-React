@@ -7,10 +7,15 @@ class Filters extends Component {
   static propTypes = {
     setAllFilter: PropTypes.func.isRequired,
     setActiveFilter: PropTypes.func.isRequired,
-    setInActiveFilter: PropTypes.func.isRequired
+    setInActiveFilter: PropTypes.func.isRequired,
+    todos: PropTypes.array.isRequired
   };
 
   render() {
+    const {todos} = this.props;
+    let todoCounter = 0;
+
+    todos.map(todo => !todo.isCompleted ? todoCounter++ : null);
     return (
       <div>
       Show:
@@ -20,10 +25,17 @@ class Filters extends Component {
         <a href="#" onClick={this.props.setActiveFilter}>Active</a>
         {', '}
         <a href="#" onClick={this.props.setInActiveFilter}>Completed</a>
+        <div>{todoCounter} {todoCounter === 1 ? ' Item left' : ' Items left '}</div>
       </div>
     );
   }
 }
+
+const matStateToProps = state => {
+  return {
+    todos: state.todos.todoList
+  };
+};
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -39,4 +51,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(Filters);
+export default connect(matStateToProps, mapDispatchToProps)(Filters);
