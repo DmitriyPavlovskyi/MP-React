@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {addTodo} from '../shared/todos/toDoActions';
 import {connect} from 'react-redux';
+import {addTodo} from '../shared/todos/toDoActions';
 
 class CreateTodo extends Component {
   static propTypes = {
