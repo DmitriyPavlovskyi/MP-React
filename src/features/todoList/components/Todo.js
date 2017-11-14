@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
+import './Todo.css';
+
 const Todo = (props) => {
   const {item, deleteTodo, toggleOpen, isOpened, updateTodo, isCompleted, toggleCompleted} = props;
 
@@ -10,7 +12,7 @@ const Todo = (props) => {
   }
   // Как правильнее передать в новый инпут значение todo?
   return (
-    <li>
+    <li className="todo__item">
       {isOpened ?
         <div>
           <input type="text" placeholder="Enter new value"/>
@@ -22,8 +24,8 @@ const Todo = (props) => {
             style={{textDecoration: isCompleted ? 'line-through' : 'none'}}
             onClick={toggleCompleted}>{item.todo}
           </span>
-          <button onClick={toggleOpen}>Edit</button>
-          <button onClick={deleteTodo}>Delete</button>
+          <button onClick={toggleOpen} className="todo__button">Edit</button>
+          <button onClick={deleteTodo} className="todo__button">Delete</button>
         </div>
       }
     </li>

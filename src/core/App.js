@@ -5,6 +5,7 @@ import RootReducer from './RootReducer';
 import CreateTodo from '../features/CreateTodo/CreateTodo';
 import TodoList from '../features/TodoList/TodoList';
 import Filters from '../features/Filters/Filters';
+import './App.css';
 
 let store = createStore(RootReducer);
 

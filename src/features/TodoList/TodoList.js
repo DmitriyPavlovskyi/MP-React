@@ -4,6 +4,8 @@ import {connect} from 'react-redux';
 import Todo from './components/Todo';
 import {deleteTodo, toggleTodo, updateTodo, toggleCompleted} from '../shared/todos/toDoActions';
 
+import './TodoList.css';
+
 class TodoList extends Component {
   render() {
     const todos = this.props.todos;
@@ -26,7 +28,7 @@ class TodoList extends Component {
       item = {item}
     />));
     return (
-      <ul>
+      <ul className="todo__list">
         <h2>ToDo List:</h2>
         {todoList}
       </ul>
