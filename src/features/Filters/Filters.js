@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {setFilter} from './actions';
+import {setFilter, clearCompletedTodos} from './actions';
 
 class Filters extends Component {
   static propTypes = {
     setAllFilter: PropTypes.func.isRequired,
     setActiveFilter: PropTypes.func.isRequired,
     setInActiveFilter: PropTypes.func.isRequired,
+    clearCompletedTodos: PropTypes.func.isRequired,
     todos: PropTypes.array.isRequired
   };
 
@@ -26,6 +27,7 @@ class Filters extends Component {
         {', '}
         <a href="#" onClick={this.props.setInActiveFilter}>Completed</a>
         <div>{todoCounter} {todoCounter === 1 ? ' Item left' : ' Items left '}</div>
+        <button onClick={this.props.clearCompletedTodos}>Clear completed</button>
       </div>
     );
   }
@@ -47,6 +49,9 @@ const mapDispatchToProps = dispatch => {
     },
     setInActiveFilter: () => {
       dispatch(setFilter('SHOW_INACTIVE'));
+    },
+    clearCompletedTodos: () => {
+      dispatch(clearCompletedTodos());
     }
   };
 };

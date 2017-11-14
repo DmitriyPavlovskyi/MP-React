@@ -55,6 +55,12 @@ const todos = (state = initialState, action) => {
       todoList: state.todoList.concat([test])
     };
 
+  case 'CLEAR_COMPLETED':
+    return {
+      ...state,
+      todoList: state.todoList.filter(todo => !todo.isCompleted)
+    };
+
   default:
     return state;
   }
