@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {setAllFilter, setActiveFilter, setInActiveFilter} from './actions';
+import {setFilter} from './actions';
 
 class Filters extends Component {
   static propTypes = {
@@ -28,13 +28,13 @@ class Filters extends Component {
 const mapDispatchToProps = dispatch => {
   return {
     setAllFilter: () => {
-      dispatch(setAllFilter());
+      dispatch(setFilter('SHOW_ALL'));
     },
     setActiveFilter: () => {
-      dispatch(setActiveFilter());
+      dispatch(setFilter('SHOW_ACTIVE'));
     },
     setInActiveFilter: () => {
-      dispatch(setInActiveFilter());
+      dispatch(setFilter('SHOW_INACTIVE'));
     }
   };
 };

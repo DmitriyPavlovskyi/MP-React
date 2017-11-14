@@ -1,24 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {addTodo} from './actions';
+import {addTodo} from '../shared/todos/toDoActions';
 import {connect} from 'react-redux';
 
 class CreateTodo extends Component {
   static propTypes = {
     createTodo: PropTypes.func.isRequired
   };
-
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     ..
-  //   };
-  //   this.input = null;
-  // }
-  //
-  // state = {
-  //
-  // };
 
   input = null;
 

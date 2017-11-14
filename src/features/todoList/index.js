@@ -2,14 +2,20 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Todo from './components/Todo';
-import {deleteTodo, toggleTodo, updateTodo, toggleCompleted} from './actions';
+import {deleteTodo, toggleTodo, updateTodo, toggleCompleted} from '../shared/todos/toDoActions';
 
-// Как можно связать данные в одном месте, createTodo тянет из стора опять
-// Тут в store добавляются элементы но он их не рендерит
 class TodoList extends Component {
-  render() {debugger
+  render() {
     const todos = this.props.todos;
-    let todoList = todos.map(item => (<Todo
+    let activeFilters = todos.filter(item => !item.isCompleted);
+    let inActiveFilters = todos.filter(item => item.isCompleted);
+    const filters = {
+      SHOW_ALL: todos,
+      SHOW_ACTIVE: activeFilters,
+      SHOW_INACTIVE: inActiveFilters
+    };
+
+    let todoList = filters[this.props.activeFilter].map(item => (<Todo
       key = {item.id}
       deleteTodo = {this.props.deleteTodo.bind(null, item.id)}
       toggleOpen = {this.props.toggleOpen.bind(null, item.id)}
@@ -38,7 +44,8 @@ TodoList.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    todos: state.todoList
+    todos: state.todos.todoList,
+    activeFilter: state.filters
   };
 };
 

@@ -1,11 +1,9 @@
 import { combineReducers } from 'redux';
-import createTodo from '../createTodo/reducer';
-import todoList from '../todoList/reducer';
-import filters from '../filters/reducer';
+import todos from '../features/shared/todos/toDoReducer';
+import filters from '../features/filters/reducer';
 
 const todoApp = combineReducers({
-  createTodo,
-  todoList,
+  todos,
   filters
 });
 

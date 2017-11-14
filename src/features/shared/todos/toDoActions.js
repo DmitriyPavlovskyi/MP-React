@@ -1,4 +1,11 @@
-import {DELETE_TODO, TOGGLE_TODO, UPDATE_TODO, TOGGLE_COMPLETED} from './constants';
+import {ADD_TODO, DELETE_TODO, TOGGLE_TODO, UPDATE_TODO, TOGGLE_COMPLETED} from './constants';
+// Почему не тянет со стора тудушки ?
+export const addTodo = (todo) => {
+  return {
+    type: ADD_TODO,
+    payload: todo
+  };
+};
 
 export const deleteTodo = (id) => {
   return {
