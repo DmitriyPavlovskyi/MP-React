@@ -1,31 +1,34 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Field, reduxForm } from 'redux-form';
 import {connect} from 'react-redux';
 import {addTodo} from '../shared/todos/toDoActions';
 
-class CreateTodo extends Component {
+class ContactForm extends Component {
   static propTypes = {
-    createTodo: PropTypes.func.isRequired
-  };
+    handleSubmit: PropTypes.func.isRequired,
+    createTodo: PropTypes.func.isRequired,
+    reset: PropTypes.func.isRequired,
+    pristine: PropTypes.bool,
+    submitting: PropTypes.bool
+  }
 
-  input = null;
-
-  handleDispatchAddition = () => {
+  handleNewData = (values) => {
     this.props.createTodo({
       id: Date.now(),
-      todo: this.input.value,
+      todo: values.todoValue,
       isOpened: false
     });
 
-    this.input.value = '';
+    this.props.reset();
   }
 
   render() {
     return (
-      <div>
-        <input ref={(input) => {this.input = input;}} type="text" placeholder="Add some text"/>
-        <button onClick={this.handleDispatchAddition}>Add todo</button>
-      </div>
+      <form onSubmit={this.props.handleSubmit(this.handleNewData)}>
+        <Field name="todoValue" component="input" type="text" />
+        <button disabled={this.props.pristine || this.props.submitting} >Add todo</button>
+      </form>
     );
   }
 }
@@ -38,4 +41,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(CreateTodo);
+export default connect(null, mapDispatchToProps)(reduxForm({ form: 'Add todo' })(ContactForm));
