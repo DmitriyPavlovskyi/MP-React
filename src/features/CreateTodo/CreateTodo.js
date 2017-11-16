@@ -4,6 +4,52 @@ import { Field, reduxForm } from 'redux-form';
 import {connect} from 'react-redux';
 import {addTodo} from '../shared/todos/toDoActions';
 
+const validate = values => {debugger
+  const errors = {};
+
+  if (!values.todoValue) {
+    errors.todoValue = 'Is required';
+  } else if (values.todoValue.length > 15) {
+    errors.todoValue = 'Task is too long';
+  }
+
+  return errors;
+};
+
+const warn = values => {
+  const warnings = {};
+
+  if (values.todoValue && values.todoValue.length <= 5) {
+    warnings.todoValue = 'Task is slightly short';
+  }
+  return warnings;
+};
+
+const errorStyles = {
+  color: '#e41f1f',
+  fontWeight: 'bold',
+  display: 'block'
+};
+
+const warningStyles = {
+  color: 'orange',
+  fontWeight: 'bold',
+  display: 'block'
+};
+
+const renderField = ({input, label, type, meta: { touched, error, warning }
+}) => (
+  <div>
+    <label>{label}</label>
+    <div>
+      <input {...input} placeholder={label} type={type} />
+      {touched &&
+        ((error && <span style={errorStyles}>{error}</span>) ||
+          (warning && <span style={warningStyles}>{warning}</span>))}
+    </div>
+  </div>
+);
+
 class ContactForm extends Component {
   static propTypes = {
     handleSubmit: PropTypes.func.isRequired,
@@ -13,7 +59,7 @@ class ContactForm extends Component {
     submitting: PropTypes.bool
   }
 
-  handleNewData = (values) => {
+  handleNewData = (values) => {debugger
     this.props.createTodo({
       id: Date.now(),
       todo: values.todoValue,
@@ -26,7 +72,7 @@ class ContactForm extends Component {
   render() {
     return (
       <form onSubmit={this.props.handleSubmit(this.handleNewData)}>
-        <Field name="todoValue" component="input" type="text" />
+        <Field name="todoValue" component={renderField} type="text" label="Todo test"/>
         <button disabled={this.props.pristine || this.props.submitting} >Add todo</button>
       </form>
     );
@@ -41,4 +87,8 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(reduxForm({ form: 'Add todo' })(ContactForm));
+export default connect(null, mapDispatchToProps)(reduxForm({
+  form: 'Add todo',
+  validate,
+  warn
+})(ContactForm));
