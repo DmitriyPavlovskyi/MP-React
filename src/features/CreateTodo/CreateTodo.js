@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {addTodo} from '../shared/todos/toDoActions';
 import {errorStyles, warningStyles} from '../shared/formsValidationStyles';
 
-const validate = values => {debugger
+const validate = values => {
   const errors = {};
 
   if (!values.todoValue) {

@@ -5,7 +5,7 @@ import RootReducer from './RootReducer';
 import CreateTodo from '../features/CreateTodo/CreateTodo';
 import TodoList from '../features/TodoList/TodoList';
 import Filters from '../features/Filters/Filters';
-import SyncValidationForm from '../features/UserForm/UserForm';
+import ReduxForm from '../features/UserForm/UserForm';
 import './App.css';
 
 let store = createStore(RootReducer);
@@ -22,7 +22,7 @@ class App extends Component {
           <CreateTodo />
           <TodoList />
           <Filters />
-          <SyncValidationForm />
+          <ReduxForm />
         </div>
       </Provider>
     );

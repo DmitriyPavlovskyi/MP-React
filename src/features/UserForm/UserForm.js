@@ -3,63 +3,98 @@ import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import {errorStyles, warningStyles} from '../shared/formsValidationStyles';
 
-const validate = values => {
-  const errors = {};
+//-----------Не совсем понятна эта функция-----------
+const renderField = ({input, label, type, meta: { touched, error, warning }
+}) => (
+  <div>
+    <label>{label}</label>
+    <div>
+      <input {...input} placeholder={label} type={type} />
+      {touched &&
+        ((error && <span style={errorStyles}>{error}</span>) ||
+          (warning && <span style={warningStyles}>{warning}</span>))}
+    </div>
+  </div>
+);
 
-  if (!values.username) {
-    errors.username = 'Required';
-  } else if (values.username.length > 15) {
-    errors.username = 'Must be 15 characters or less';
-  }
-  if (!values.email) {
-    errors.email = 'Required';
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors.email = 'Invalid email address';
-  }
-  if (!values.age) {
-    errors.age = 'Required';
-  } else if (isNaN(Number(values.age))) {
-    errors.age = 'Must be a number';
-  } else if (Number(values.age) < 18) {
-    errors.age = 'Sorry, you must be at least 18 years old';
-  }
-  return errors;
-};
+const required = value => (value ? undefined : 'Required');
 
-const warn = values => {
-  const warnings = {};
-  if (values.age < 19) {
-    warnings.age = 'Hmm, you seem a bit young...';
-  }
-  return warnings;
-};
+const maxLength = max => value => value && value.length > max ? `Must be ${max} characters or less` : undefined
 
-function SyncValidationForm(props) {
+const maxLength15 = maxLength(15);
+
+export const minLength = min => value => value && value.length < min ? `Must be ${min} characters or more` : undefined
+
+export const minLength2 = minLength(2);
+
+const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined
+
+const minValue = min => value => value && value < min ? `Must be at least ${min}` : undefined
+
+const minValue18 = minValue(18);
+
+const email = value =>
+  value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)
+    ? 'Invalid email address'
+    : undefined
+
+const tooOld = value => value && value > 65 ? 'You might be too old for this' : undefined
+
+const aol = value =>
+  value && /.+@aol\.com/.test(value)
+    ? 'Really? You still use AOL for your email?'
+    : undefined
+
+const alphaNumeric = value =>
+  value && /[^a-zA-Z0-9 ]/i.test(value)
+    ? 'Only alphanumeric characters'
+    : undefined
+
+export const phoneNumber = value =>
+  value && !/^(0|[1-9][0-9]{9})$/i.test(value)
+    ? 'Invalid phone number, must be 10 digits'
+    : undefined
+
+export function handleSubmitData(values) {
+  console.log(values);
+}
+
+const FieldLevelValidation = props => {
   const {handleSubmit, pristine, submitting, reset} = props;
 
-  const renderField = ({input, label, type, meta: { touched, error, warning }
-  }) => (
-    <div>
-      <label>{label}</label>
-      <div>
-        <input {...input} placeholder={label} type={type} />
-        {touched &&
-          ((error && <span style={errorStyles}>{error}</span>) ||
-            (warning && <span style={warningStyles}>{warning}</span>))}
-      </div>
-    </div>
-  );
-
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit(handleSubmitData)}>
       <Field
         name="username"
         type="text"
         component={renderField}
         label="Username"
+        validate={[required, maxLength15, minLength2]}
+        warn={alphaNumeric}
       />
-      <Field name="email" type="email" component={renderField} label="Email" />
-      <Field name="age" type="number" component={renderField} label="Age" />
+      <Field
+        name="email"
+        type="email"
+        component={renderField}
+        label="Email"
+        validate={email}
+        warn={aol}
+      />
+      <Field
+        name="age"
+        type="number"
+        component={renderField}
+        label="Age"
+        validate={[required, number, minValue18]}
+        warn={tooOld}
+      />
+      <Field
+        name="phone"
+        type="number"
+        component={renderField}
+        label="Phone number"
+        validate={[required, phoneNumber]}
+      />
       <div>
         <button type="submit" disabled={submitting}>
           Submit
@@ -70,9 +105,9 @@ function SyncValidationForm(props) {
       </div>
     </form>
   );
-}
+};
 
-SyncValidationForm.propTypes = {
+FieldLevelValidation.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
@@ -80,7 +115,5 @@ SyncValidationForm.propTypes = {
 };
 
 export default reduxForm({
-  form: 'SyncValidationForm',
-  validate,
-  warn
-})(SyncValidationForm);
+  form: 'FieldLevelValidation'
+})(FieldLevelValidation);
