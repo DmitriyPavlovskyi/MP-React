@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import {connect} from 'react-redux';
 import {addTodo} from '../shared/todos/toDoActions';
+import {errorStyles, warningStyles} from '../shared/formsValidationStyles';
 
 const validate = values => {debugger
   const errors = {};
@@ -23,18 +24,6 @@ const warn = values => {
     warnings.todoValue = 'Task is slightly short';
   }
   return warnings;
-};
-
-const errorStyles = {
-  color: '#e41f1f',
-  fontWeight: 'bold',
-  display: 'block'
-};
-
-const warningStyles = {
-  color: 'orange',
-  fontWeight: 'bold',
-  display: 'block'
 };
 
 const renderField = ({input, label, type, meta: { touched, error, warning }
