@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import {errorStyles} from '../shared/formsValidationStyles';
-import submit from './submit';
+import validate from './validate';
+import asyncValidate from './asyncValidate';
 
 //-----------Не совсем понятна эта функция-----------
 const renderField = ({input, label, type, meta: { touched, error }}) => (
@@ -15,11 +16,11 @@ const renderField = ({input, label, type, meta: { touched, error }}) => (
   </div>
 );
 
-const SubmitValidationForm = props => {
-  const { error, handleSubmit, pristine, reset, submitting } = props;
+const AsyncValidationForm = props => {
+  const { handleSubmit, pristine, reset, submitting } = props;
 
   return (
-    <form onSubmit={handleSubmit(submit)}>
+    <form onSubmit={handleSubmit(handleSubmit)}>
       <Field
         name="username"
         type="text"
@@ -32,7 +33,6 @@ const SubmitValidationForm = props => {
         component={renderField}
         label="Password"
       />
-      {error && <strong>{error}</strong>}
       <div>
         <button type="submit" disabled={submitting}>
           Log In
@@ -45,7 +45,7 @@ const SubmitValidationForm = props => {
   );
 };
 
-SubmitValidationForm.propTypes = {
+AsyncValidationForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
@@ -54,5 +54,8 @@ SubmitValidationForm.propTypes = {
 };
 
 export default reduxForm({
-  form: 'SubmitValidationForm'
-})(SubmitValidationForm);
+  form: 'asyncValidation',
+  validate,
+  asyncValidate,
+  asyncBlurFields: ['username']
+})(AsyncValidationForm);
