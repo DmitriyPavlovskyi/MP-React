@@ -1,4 +1,4 @@
-import {SET_FILTER, CLEAR_COMPLETED} from './constants';
+import {SET_FILTER, CLEAR_COMPLETED, SELECT_ALL} from './constants';
 
 export const setFilter = (filter) => {
   return {
@@ -10,5 +10,11 @@ export const setFilter = (filter) => {
 export const clearCompletedTodos = () => {
   return {
     type: CLEAR_COMPLETED
+  };
+};
+
+export const completeAllTodos = () => {
+  return {
+    type: SELECT_ALL
   };
 };

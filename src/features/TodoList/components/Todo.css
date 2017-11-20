@@ -1,8 +1,14 @@
 .todo__item {
   margin: 5px 0;
+  height: 40px;
   list-style: none;
 }
 
 .todo__button {
   margin: 0 5px;
+}
+
+.todo__buttons-wrapper {
+  display: inline;
+  float: right;
 }

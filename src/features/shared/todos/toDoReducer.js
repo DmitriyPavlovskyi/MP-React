@@ -61,6 +61,16 @@ const todos = (state = initialState, action) => {
       todoList: state.todoList.filter(todo => !todo.isCompleted)
     };
 
+  case 'SELECT_ALL':
+    return {
+      ...state,
+      todoList: state.todoList.map(todo =>
+        (todo.isCompleted === false)
+          ? {...todo, isCompleted: true}
+          : todo
+      )
+    };
+
   default:
     return state;
   }

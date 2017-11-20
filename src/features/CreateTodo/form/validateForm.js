@@ -1,9 +1,9 @@
 export const validate = values => {
   const errors = {};
 
-  if (!values.todoValue) {
+  if (values.todoValue && !(values.todoValue).trim()) {
     errors.todoValue = 'Is required';
-  } else if (values.todoValue.length > 15) {
+  } else if (values.todoValue && values.todoValue.length > 15) {
     errors.todoValue = 'Task is too long';
   }
 

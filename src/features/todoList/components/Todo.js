@@ -24,8 +24,10 @@ const Todo = (props) => {
             style={{textDecoration: isCompleted ? 'line-through' : 'none'}}
             onClick={toggleCompleted}>{item.todo}
           </span>
-          <button onClick={toggleOpen} className="todo__button">Edit</button>
-          <button onClick={deleteTodo} className="todo__button">Delete</button>
+          <div className="todo__buttons-wrapper">
+            <button onClick={toggleOpen} className="btn btn-sm btn-info todo__button">Edit</button>
+            <button onClick={deleteTodo} className="btn btn-sm btn-danger todo__button">Delete</button>
+          </div>
         </div>
       }
     </li>
