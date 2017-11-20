@@ -1,104 +1,47 @@
 import React from 'react';
-import { Field, FieldArray, reduxForm } from 'redux-form';
-import validate from './validate';
+import { Field, reduxForm } from 'redux-form';
+import submit from './submit';
 
 const renderField = ({ input, label, type, meta: { touched, error } }) => (
   <div>
     <label>{label}</label>
     <div>
-      <input {...input} type={type} placeholder={label} />
+      <input {...input} placeholder={label} type={type} />
       {touched && error && <span>{error}</span>}
     </div>
   </div>
-);
-
-const renderHobbies = ({ fields, meta: { error } }) => (
-  <ul>
-    <li>
-      <button type="button" onClick={() => fields.push()}>
-        Add Hobby
-      </button>
-    </li>
-    {fields.map((hobby, index) => (
-      <li key={index}>
-        <button
-          type="button"
-          title="Remove Hobby"
-          onClick={() => fields.remove(index)}>Delete hobby</button>
-        <Field
-          name={hobby}
-          type="text"
-          component={renderField}
-          label={`Hobby #${index + 1}`}
-        />
-      </li>
-    ))}
-    {error && <li className="error">{error}</li>}
-  </ul>
-);
-
-const renderMembers = ({ fields, meta: { error, submitFailed } }) => (
-  <ul>
-    <li>
-      <button type="button" onClick={() => fields.push({})}>
-        Add Member
-      </button>
-      {submitFailed && error && <span>{error}</span>}
-    </li>
-    {fields.map((member, index) => (
-      <li key={index}>
-        <button
-          type="button"
-          title="Remove Member"
-          onClick={() => fields.remove(index)}>Delete member</button>
-
-        <h4>Member #{index + 1}</h4>
-        <Field
-          name={`${member}.firstName`}
-          type="text"
-          component={renderField}
-          label="First Name"
-        />
-        <Field
-          name={`${member}.lastName`}
-          type="text"
-          component={renderField}
-          label="Last Name"
-        />
-        <FieldArray name={`${member}.hobbies`} component={renderHobbies} />
-      </li>
-    ))}
-  </ul>
 );
 
 function handleSubmitWrapped(data) {
   console.log(data);
 }
 
-const FieldArraysForm = props => {
-  const { handleSubmit, pristine, reset, submitting } = props
+const RemoteSubmitForm = props => {
+  const { error, handleSubmit } = props;
   return (
     <form onSubmit={handleSubmit(handleSubmitWrapped)}>
       <Field
-        name="clubName"
+        name="username"
         type="text"
         component={renderField}
-        label="Club Name"
+        label="Username"
       />
-      <FieldArray name="members" component={renderMembers} />
+      <Field
+        name="password"
+        type="password"
+        component={renderField}
+        label="Password"
+      />
+      {error && <strong>{error}</strong>}
       <div>
-        <button type="submit" disabled={submitting}>
-          Submit
-        </button>
-        <button type="button" disabled={pristine || submitting} onClick={reset}>
-          Clear Values
-        </button>
+        No submit button in the form. The submit button below is a separate
+        unlinked component.
       </div>
     </form>
   );
 };
 
 export default reduxForm({
-  form: 'fieldArrays',
-  validate
-})(FieldArraysForm);
+  form: 'remoteSubmit', // a unique identifier for this form
+  onSubmit: submit // submit function must be passed to onSubmit
+})(RemoteSubmitForm);

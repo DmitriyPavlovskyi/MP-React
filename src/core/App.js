@@ -6,6 +6,7 @@ import CreateTodo from '../features/CreateTodo/CreateTodo';
 import TodoList from '../features/TodoList/TodoList';
 import Filters from '../features/Filters/Filters';
 import ReduxForm from '../features/UserForm/UserForm';
+import RemoteSubmitButton from '../features/UserForm/RemoteSubmitButton';
 import './App.css';
 
 let store = createStore(RootReducer);
@@ -23,6 +24,7 @@ class App extends Component {
           <TodoList />
           <Filters />
           <ReduxForm />
+          <RemoteSubmitButton />
         </div>
       </Provider>
     );
