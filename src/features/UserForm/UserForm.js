@@ -1,93 +1,94 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Field, reduxForm, formValueSelector } from 'redux-form';
+import { Field, FieldArray, reduxForm } from 'redux-form';
+import validate from './validate';
 
-function handleSubmitData(values) {
-  console.log(values);
-}
-let SelectingFormValuesForm = props => {
-  const {
-    favoriteColorValue,
-    fullName,
-    handleSubmit,
-    hasEmailValue,
-    pristine,
-    reset,
-    submitting
-  } = props;
+const renderField = ({ input, label, type, meta: { touched, error } }) => (
+  <div>
+    <label>{label}</label>
+    <div>
+      <input {...input} type={type} placeholder={label} />
+      {touched && error && <span>{error}</span>}
+    </div>
+  </div>
+);
 
-  return (
-    <form onSubmit={handleSubmit(handleSubmitData)}>
-      <div>
-        <label>First Name</label>
-        <div>
-          <Field
-            name="firstName"
-            component="input"
-            type="text"
-            placeholder="First Name"
-          />
-        </div>
-      </div>
-      <div>
-        <label>Last Name</label>
-        <div>
-          <Field
-            name="lastName"
-            component="input"
-            type="text"
-            placeholder="Last Name"
-          />
-        </div>
-      </div>
-      <div>
-        <label htmlFor="hasEmail">Has Email?</label>
-        <div>
-          <Field
-            name="hasEmail"
-            id="hasEmail"
-            component="input"
-            type="checkbox"
-          />
-        </div>
-      </div>
-      {hasEmailValue && (
-        <div>
-          <label>Email</label>
-          <div>
-            <Field
-              name="email"
-              component="input"
-              type="email"
-              placeholder="Email"
-            />
-          </div>
-        </div>
-      )}
-      <div>
-        <label>Favorite Color</label>
-        <div>
-          <Field name="favoriteColor" component="select">
-            <option />
-            <option value="#ff0000">Red</option>
-            <option value="#00ff00">Green</option>
-            <option value="#0000ff">Blue</option>
-          </Field>
-        </div>
-      </div>
-      {favoriteColorValue && (
-        <div
-          style={{
-            height: 80,
-            width: 200,
-            margin: '10px auto',
-            backgroundColor: favoriteColorValue
-          }}
+const renderHobbies = ({ fields, meta: { error } }) => (
+  <ul>
+    <li>
+      <button type="button" onClick={() => fields.push()}>
+        Add Hobby
+      </button>
+    </li>
+    {fields.map((hobby, index) => (
+      <li key={index}>
+        <button
+          type="button"
+          title="Remove Hobby"
+          onClick={() => fields.remove(index)}>Delete hobby</button>
+        <Field
+          name={hobby}
+          type="text"
+          component={renderField}
+          label={`Hobby #${index + 1}`}
         />
-      )}
+      </li>
+    ))}
+    {error && <li className="error">{error}</li>}
+  </ul>
+);
+
+const renderMembers = ({ fields, meta: { error, submitFailed } }) => (
+  <ul>
+    <li>
+      <button type="button" onClick={() => fields.push({})}>
+        Add Member
+      </button>
+      {submitFailed && error && <span>{error}</span>}
+    </li>
+    {fields.map((member, index) => (
+      <li key={index}>
+        <button
+          type="button"
+          title="Remove Member"
+          onClick={() => fields.remove(index)}>Delete member</button>
+
+        <h4>Member #{index + 1}</h4>
+        <Field
+          name={`${member}.firstName`}
+          type="text"
+          component={renderField}
+          label="First Name"
+        />
+        <Field
+          name={`${member}.lastName`}
+          type="text"
+          component={renderField}
+          label="Last Name"
+        />
+        <FieldArray name={`${member}.hobbies`} component={renderHobbies} />
+      </li>
+    ))}
+  </ul>
+);
+
+function handleSubmitWrapped(data) {
+  console.log(data);
+}
+
+const FieldArraysForm = props => {
+  const { handleSubmit, pristine, reset, submitting } = props
+  return (
+    <form onSubmit={handleSubmit(handleSubmitWrapped)}>
+      <Field
+        name="clubName"
+        type="text"
+        component={renderField}
+        label="Club Name"
+      />
+      <FieldArray name="members" component={renderMembers} />
       <div>
-        <button type="submit" disabled={pristine || submitting}>
-          Submit {fullName}
+        <button type="submit" disabled={submitting}>
+          Submit
         </button>
         <button type="button" disabled={pristine || submitting} onClick={reset}>
           Clear Values
@@ -97,26 +98,7 @@ let SelectingFormValuesForm = props => {
   );
 };
 
-// The order of the decoration does not matter.
-
-// Decorate with redux-form
-SelectingFormValuesForm = reduxForm({
-  form: 'selectingFormValues' // a unique identifier for this form
-})(SelectingFormValuesForm);
-
-// Decorate with connect to read form values
-const selector = formValueSelector('selectingFormValues') // <-- same as form name
-SelectingFormValuesForm = connect(state => {
-  // can select values individually
-  const hasEmailValue = selector(state, 'hasEmail');
-  const favoriteColorValue = selector(state, 'favoriteColor');
-  // or together as a group
-  const { firstName, lastName } = selector(state, 'firstName', 'lastName');
-  return {
-    hasEmailValue,
-    favoriteColorValue,
-    fullName: `${firstName || ''} ${lastName || ''}`
-  };
-})(SelectingFormValuesForm);
-
-export default SelectingFormValuesForm;
+export default reduxForm({
+  form: 'fieldArrays',
+  validate
+})(FieldArraysForm);
