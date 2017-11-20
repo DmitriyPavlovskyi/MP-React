@@ -5,8 +5,6 @@ import RootReducer from './RootReducer';
 import CreateTodo from '../features/CreateTodo/CreateTodo';
 import TodoList from '../features/TodoList/TodoList';
 import Filters from '../features/Filters/Filters';
-// import showResults from '../features/testForm/showResults';
-import InitializeFromStateForm from '../features/testForm/InitializeFromStateForm';
 import './App.css';
 
 let store = createStore(RootReducer);
@@ -23,7 +21,6 @@ class App extends Component {
           <CreateTodo />
           <TodoList />
           <Filters />
-          <InitializeFromStateForm />
         </div>
       </Provider>
     );
