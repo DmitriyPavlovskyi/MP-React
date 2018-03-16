@@ -33,7 +33,6 @@ describe('BASICS', () => {
   });
 });
 
-
 // ------NUMBERS------
 describe('NUMBERS', () => {
   test('two plus two', () => {
@@ -56,7 +55,6 @@ describe('NUMBERS', () => {
   });
 });
 
-
 // ------STRING------
 describe('STRING', () => {
   test('there is no I in team', () => {
@@ -67,7 +65,6 @@ describe('STRING', () => {
     expect('Christoph').toMatch(/stop/);
   });
 });
-
 
 // ------ARRAYS------
 describe('ARRAYS', () => {
@@ -83,7 +80,6 @@ describe('ARRAYS', () => {
     expect(shoppingList).toContain('beer');
   });
 });
-
 
 // ------EXCEPTIONS------
 describe('EXCEPTIONS', () => {
